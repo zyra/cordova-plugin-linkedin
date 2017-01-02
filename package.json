@@ -1,0 +1,27 @@
+{
+  "name": "cordova-plugin-linkedin",
+  "version": "0.0.1",
+  "description": "Cordova plugin for LinkedIn",
+  "cordova": {
+    "id": "cordova-plugin-linkedin",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zyramedia/cordova-plugin-linkedin.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Ibby Hadeed <i.hadeed@zyra.ca>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zyramedia/cordova-plugin-linkedin/issues"
+  },
+  "homepage": "https://github.com/zyramedia/cordova-plugin-linkedin#readme"
+}
