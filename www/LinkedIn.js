@@ -2,12 +2,24 @@ var exec = require('cordova/exec');
 
 module.exports = {
 
-    initWithAccessToken: function(accessToken, success, error) {
-        exec(success, error, "LinkedIn", "initWithAccessToken", [accessToken]);
+    login: function(scopes, promptToInstall, success, error) {
+        exec(success, error, "LinkedIn", "login", [scopes, promptToInstall]);
     },
 
-    init: function(success, error) {
-        exec(success, error, "LinkedIn", "init", []);
+    logout: function() {
+        exec(null, null, "LinkedIn", "logout", []);
+    },
+
+    getRequest: function(url, success, error) {
+        exec(success, error, "LinkedIn", "getRequest", [url]);
+    },
+
+    postRequest: function(url, body, success, error) {
+        exec(success, error, "LinkedIn", "postRequest", [url], body);
+    },
+
+    openProfile: function(memberId, success, error) {
+        exec(success, error, "LinkedIn", "openProfile", [memberId]);
     }
 
 };
