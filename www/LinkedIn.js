@@ -1,5 +1,13 @@
 var exec = require('cordova/exec');
 
-exports.coolMethod = function(arg0, success, error) {
-    exec(success, error, "LinkedIn", "coolMethod", [arg0]);
+module.exports = {
+
+    initWithAccessToken: function(accessToken, success, error) {
+        exec(success, error, "LinkedIn", "initWithAccessToken", [accessToken]);
+    },
+
+    init: function(success, error) {
+        exec(success, error, "LinkedIn", "init", []);
+    }
+
 };

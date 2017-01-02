@@ -1,0 +1,15 @@
+      try {
+        PackageInfo info = getPackageManager().getPackageInfo("com.ionicframework.linkedintest755123", PackageManager.GET_SIGNATURES);
+
+        Log.d(TAG, "Checking for signatures");
+
+        for (Signature signature: info.signatures) {
+          MessageDigest md = MessageDigest.getInstance("SHA");
+          md.update(signature.toByteArray());
+          Log.d(TAG, Base64.encodeToString(md.digest(), Base64.DEFAULT));
+        }
+      } catch (PackageManager.NameNotFoundException e) {
+
+      } catch (NoSuchAlgorithmException e) {
+
+      }

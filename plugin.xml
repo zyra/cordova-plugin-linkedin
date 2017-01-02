@@ -8,19 +8,21 @@
         <clobbers target="cordova.plugins.LinkedIn"/>
     </js-module>
 
-    <preference name="APP_ID" default="" />
-
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="LinkedIn">
-                <param name="android-package" value="cordova-plugin-linkedin.LinkedIn"/>
+                <param name="android-package" value="com.zyramedia.cordova.linkedin.LinkedIn"/>
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml"/>
-        <source-file src="src/android/LinkedIn.java" target-dir="src/cordova-plugin-linkedin/LinkedIn"/>
+        <source-file src="src/android/LinkedIn.java" target-dir="src/com/zyramedia/cordova/linkedin"/>
+        <resource-file src="src/android/linkedin.jar" target="libs/linkedin.jar" />
+        <framework src="src/android/LinkedIn.gradle" custom="true" type="gradleReference" />
     </platform>
 
     <platform name="ios">
+        <preference name="APP_ID" default="" />
+
         <config-file parent="/*" target="config.xml">
             <feature name="LinkedIn">
                 <param name="ios-package" value="LinkedIn"/>
