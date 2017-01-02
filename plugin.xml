@@ -71,6 +71,12 @@
 
         <header-file src="src/ios/LinkedIn.h"/>
         <source-file src="src/ios/LinkedIn.m"/>
+
+        <header-file src="src/ios/AppDelegate+LinkedIn.h"/>
+        <source-file src="src/ios/AppDelegate+LinkedIn.m"/>
+
+        <framework src="src/ios/linkedin-sdk.framework" custom="true" />
+
     </platform>
 
 </plugin>
