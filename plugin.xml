@@ -29,11 +29,11 @@
             </feature>
         </config-file>
 
-        <config target="*-Info.plist" parent="LIAppId">
+        <config-file target="*-Info.plist" parent="LIAppId">
             <string>$APP_ID</string>
-        </config>
+        </config-file>
 
-        <config target="*-Info.plist" parent="CFBundleURLTypes">
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
                 <dict>
                     <key>CFBundleURLSchemes</key>
@@ -42,17 +42,17 @@
                     </array>
                 </dict>
             </array>
-        </config>
+        </config-file>
 
-        <config target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
             <array>
                 <string>linkedin</string>
                 <string>linkedin-sdk2</string>
                 <string>linkedin-sdk</string>
             </array>
-        </config>
+        </config-file>
 
-        <config target="*-Info.plist" parent="NSAppTransportSecurity">
+        <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
             <dict>
                 <key>NSExceptionDomains</key>
                 <dict>
@@ -67,7 +67,7 @@
                     </dict>
                 </dict>
             </dict>
-        </config>
+        </config-file>
 
         <header-file src="src/ios/LinkedIn.h"/>
         <source-file src="src/ios/LinkedIn.m"/>
