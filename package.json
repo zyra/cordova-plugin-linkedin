@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-linkedin",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Cordova plugin for LinkedIn",
   "cordova": {
     "id": "cordova-plugin-linkedin",
