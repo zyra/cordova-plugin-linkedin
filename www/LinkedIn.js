@@ -15,7 +15,7 @@ module.exports = {
     },
 
     postRequest: function(url, body, success, error) {
-        exec(success, error, "LinkedIn", "postRequest", [url], body);
+        exec(success, error, "LinkedIn", "postRequest", [url, body]);
     },
 
     openProfile: function(memberId, success, error) {
