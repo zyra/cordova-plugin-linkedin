@@ -53,18 +53,16 @@
         </config-file>
 
         <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <key>NSExceptionDomains</key>
             <dict>
-                <key>NSExceptionDomains</key>
+                <key>linkedin.com</key>
                 <dict>
-                    <key>linkedin.com</key>
-                    <dict>
-                        <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                        <true/>
-                        <key>NSIncludesSubdomains</key>
-                        <true/>
-                        <key>NSExceptionRequiresForwardSecrecy</key>
-                        <false/>
-                    </dict>
+                    <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                    <true/>
+                    <key>NSIncludesSubdomains</key>
+                    <true/>
+                    <key>NSExceptionRequiresForwardSecrecy</key>
+                    <false/>
                 </dict>
             </dict>
         </config-file>

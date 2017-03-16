@@ -5,15 +5,18 @@
 #import <linkedin-sdk/LISDKAPIResponse.h>
 #import <linkedin-sdk/LISDKAPIError.h>
 #import <linkedin-sdk/LISDKAccessToken.h>
+#import <linkedin-sdk/LISDKDeeplinkHelper.h>
 
 @implementation LinkedIn
 
 NSString* const API_URL = @"https://api.linkedin.com/v1/";
 
+// convenience method to handle errors on most of the LinkedIn SDK methods
 - (void (^)(LISDKAPIError*)) getError:(CDVInvokedUrlCommand*)command
 {
     return ^(LISDKAPIError* error)
     {
+        NSLog(@"ERROR IS %@", error);
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     };
@@ -21,22 +24,26 @@ NSString* const API_URL = @"https://api.linkedin.com/v1/";
 
 - (void)login:(CDVInvokedUrlCommand*)command
 {
-    
-    NSArray* scopes = [command.arguments objectAtIndex:0];
-    bool promptToInstall = [[command.arguments objectAtIndex:1] boolValue];
-    
-    [LISDKSessionManager createSessionWithAuth:scopes state:nil showGoToAppStoreDialog:promptToInstall successBlock:^(NSString *response) {
+    [self.commandDelegate runInBackground:^{
         
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        // get the requested scopes for login
+        NSArray* const scopes = [command.arguments objectAtIndex:0];
+        // set promptToInstall property
+        bool const promptToInstall = [[command.arguments objectAtIndex:1] boolValue];
         
-    } errorBlock:^(NSError *error) {
-        
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
-        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-        
+        // create LinkedIn session
+        [LISDKSessionManager createSessionWithAuth:scopes state:nil showGoToAppStoreDialog:promptToInstall successBlock:^(NSString* response) {
+            
+            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+            
+        } errorBlock:^(NSError *error) {
+            
+            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+            
+        }];
     }];
-    
 }
 
 - (void)logout:(CDVInvokedUrlCommand*)command
@@ -44,29 +51,63 @@ NSString* const API_URL = @"https://api.linkedin.com/v1/";
     [LISDKSessionManager clearSession];
 }
 
+- (void (^)(LISDKAPIResponse*))handleAPIResponse:(CDVInvokedUrlCommand*) command
+{
+    return ^(LISDKAPIResponse* response) {
+        NSError *jsonError;
+        NSData *objectData = [response.data dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:&jsonError];
+        CDVPluginResult *result;
+        
+        if (jsonError != nil) {
+            // return response data as string
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:response.data];
+        } else {
+            // return response data as json
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:json];
+        }
+        
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    };
+}
+
+- (NSString*)getRequestURL: (NSString *)path
+{
+    NSMutableString* url = [[NSMutableString alloc] init];
+    [url appendString:API_URL];
+    [url appendString:path];
+    return url;
+}
+
 - (void)getRequest:(CDVInvokedUrlCommand*)command
 {
-    NSMutableString* path = [[NSMutableString alloc] init];
-    [path appendString:API_URL];
-    [path appendString:[command.arguments objectAtIndex:0]];
-    //NSString* path = [command.arguments objectAtIndex:0];
-    NSLog(@"%s: %@", "Doing a get request to url", path);
-    
-    [[LISDKAPIHelper sharedInstance] getRequest:[command.arguments objectAtIndex:0] success:^(LISDKAPIResponse * response) {
-        
-    } error:[self getError:command]];
+    [self.commandDelegate runInBackground:^{
+        [[LISDKAPIHelper sharedInstance] getRequest:[self getRequestURL:[command.arguments objectAtIndex:0]] success:[self handleAPIResponse:command] error:[self getError:command]];
+    }];
 }
 
 - (void)postRequest:(CDVInvokedUrlCommand*)command
 {
-    [[LISDKAPIHelper sharedInstance] postRequest:[command.arguments objectAtIndex:0] body:[command.arguments objectAtIndex:1] success:^(LISDKAPIResponse * response) {
-        
-    } error:[self getError:command]];
+    [self.commandDelegate runInBackground:^{
+        [[LISDKAPIHelper sharedInstance] postRequest:[self getRequestURL:[command.arguments objectAtIndex:0]] body:[command.arguments objectAtIndex:1] success:[self handleAPIResponse:command] error:[self getError:command]];
+    }];
 }
 
 - (void)openProfile:(CDVInvokedUrlCommand*)command
 {
-    
+    [self.commandDelegate runInBackground:^{
+        DeeplinkSuccessBlock success = ^(NSString *returnState) {
+            CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        };
+        
+        DeeplinkErrorBlock error = ^(NSError *error, NSString *returnState) {
+            CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        };
+        
+        [[LISDKDeeplinkHelper sharedInstance] viewOtherProfile:[command.arguments objectAtIndex:0] withState:@"viewMemberProfielButton" showGoToAppStoreDialog:TRUE success:success error:error];
+    }];
 }
 
 @end
