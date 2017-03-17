@@ -44,16 +44,18 @@ Makes a POST request to LinkedIn REST API. You can view the possible paths [here
 
 ### openProfile
 ```js
-openProfile(memberId)
+openProfile(memberId, success, error)
 ```
 * **memberId**: Member Id of the user
 Opens a member's profile in the LinkedIn app.
 
 ### hasActiveSession
 ```js
-hasActiveSession()
+hasActiveSession(success, error)
 ```
-Function returning true if an active session is found, false otherwise. Should be used to avoid unnecessary login
+Checks if there is already an existing active session. This should be used to avoid unecessary login.
+
+The success callback function will be called with one argument as a boolean, indicating whether there is an active session.
 
 
 ## Example
@@ -84,5 +86,15 @@ cordova.plugins.LinkedIn.login(scopes, true, function() {
   cordova.plugins.LinkedIn.postRequest('~/shares', payload, onSuccess, onError);
 
 }, onError);
+
+
+// check for existing session
+cordova.plugin.LinkedIn.hasActiveSession(function(exists) {
+  if (exists) {
+    console.log('We have an active session');
+  } else {
+    console.log('There is no active session, we need to call the login method');
+  }
+});
 
 ```
