@@ -1,6 +1,7 @@
 #import <Cordova/CDV.h>
 #import "LinkedIn.h"
 #import <linkedin-sdk/LISDKSessionManager.h>
+#import <linkedin-sdk/LISDKSession.h>
 #import <linkedin-sdk/LISDKAPIHelper.h>
 #import <linkedin-sdk/LISDKAPIResponse.h>
 #import <linkedin-sdk/LISDKAPIError.h>
@@ -108,6 +109,23 @@ NSString* const API_URL = @"https://api.linkedin.com/v1/";
         
         [[LISDKDeeplinkHelper sharedInstance] viewOtherProfile:[command.arguments objectAtIndex:0] withState:@"viewMemberProfielButton" showGoToAppStoreDialog:TRUE success:success error:error];
     }];
+}
+
+- (void)hasActiveSession:(CDVInvokedUrlCommand*)command
+{
+    [self.commandDelegate runInBackground:^{
+        CDVPluginResult *result;
+        LISDKSession *session = [[LISDKSessionManager sharedInstance] session];
+        if(session != nil) {
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:[session isValid]];
+        } else {
+            //Should never happen
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsBool:@"Cannot verify if a preceding session is present"];
+        }
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+
+    }];
+
 }
 
 @end

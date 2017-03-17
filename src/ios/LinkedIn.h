@@ -4,4 +4,5 @@
 - (void) getRequest: (CDVInvokedUrlCommand *) command;
 - (void) postRequest: (CDVInvokedUrlCommand *) command;
 - (void) openProfile: (CDVInvokedUrlCommand *) command;
+- (void) hasActiveSession: (CDVInvokedUrlCommand *) command;
 @end
