@@ -8,6 +8,7 @@ import android.util.Log;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
 
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
@@ -62,6 +63,8 @@ public class LinkedIn extends CordovaPlugin {
             getRequest(args, callbackContext);
         } else if(action.equals("postRequest")) {
             postRequest(args, callbackContext);
+        } else if(action.equals("hasActiveSession")) {
+            hasActiveSession(callbackContext);
         } else {
             return false;
         }
@@ -182,6 +185,16 @@ public class LinkedIn extends CordovaPlugin {
             final JSONObject body = args.getJSONObject(1);
             apiHelper.postRequest(context, API_PATH + url, body, this.getApiListener(callbackContext));
         } catch (JSONException e) {
+            callbackContext.error(e.getMessage());
+        }
+    }
+
+    private void hasActiveSession(CallbackContext callbackContext) {
+        try {
+            LISession session = liSessionManager.getSession();
+			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, session.isValid()));
+        } catch (Exception e) {
+            //Should never happen
             callbackContext.error(e.getMessage());
         }
     }

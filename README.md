@@ -42,12 +42,18 @@ postRequest(path, body, success, error)
 * **body**: The reqeust body
 Makes a POST request to LinkedIn REST API. You can view the possible paths [here](https://developer.linkedin.com/docs).
 
-### viewProfile
+### openProfile
 ```js
-viewProfile(memberId)
+openProfile(memberId)
 ```
 * **memberId**: Member Id of the user
 Opens a member's profile in the LinkedIn app.
+
+### hasActiveSession
+```js
+hasActiveSession()
+```
+Function returning true if an active session is found, false otherwise. Should be used to avoid unnecessary login
 
 
 ## Example
