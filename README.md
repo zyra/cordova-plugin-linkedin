@@ -1,6 +1,10 @@
 # Cordova LinkedIn Plugin
 A Cordova plugin that lets you use LinkedIn Native SDKs for Android and iOS.
 
+## Thanks to the author of the original plugin:
+
+Cordova LinkedIn Plugin (https://github.com/zyramedia/cordova-plugin-linkedin)
+
 ## Installation
 1. Create a LinkedIn app [here](https://www.linkedin.com/developer/apps)
 2. Click on your app's name, then select the **Mobile** page from the side menu
@@ -42,9 +46,9 @@ postRequest(path, body, success, error)
 * **body**: The reqeust body
 Makes a POST request to LinkedIn REST API. You can view the possible paths [here](https://developer.linkedin.com/docs).
 
-### viewProfile
+### openProfile
 ```js
-viewProfile(memberId)
+openProfile(memberId)
 ```
 * **memberId**: Member Id of the user
 Opens a member's profile in the LinkedIn app.
