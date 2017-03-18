@@ -1,6 +1,7 @@
 [![npm](https://img.shields.io/npm/l/express.svg)](https://www.npmjs.com/package/cordova-plugin-pintelinkedinrest)
 
 [![NPM](https://nodei.co/npm/cordova-plugin-linkedin.png?stars&downloads)](https://nodei.co/npm/cordova-plugin-linkedin/)
+[![NPM](https://nodei.co/npm-dl/cordova-plugin-linkedin.png?months=6&height=2)](https://nodei.co/npm/cordova-plugin-linkedin/)
 
 # Cordova LinkedIn Plugin
 A Cordova plugin that lets you use LinkedIn Native SDKs for Android and iOS.
