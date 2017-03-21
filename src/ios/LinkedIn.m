@@ -87,10 +87,20 @@ NSString* const API_URL = @"https://api.linkedin.com/v1/";
     }];
 }
 
+- (NSData*)getRequestData:(NSDictionary*) inputDictionary
+{
+    NSData* resultData;
+    NSError* parseError;
+    if([NSJSONSerialization isValidJSONObject:inputDictionary]) {
+        resultData = [NSJSONSerialization dataWithJSONObject:inputDictionary options:0 error:&parseError];
+    }
+    return resultData;
+}
+
 - (void)postRequest:(CDVInvokedUrlCommand*)command
 {
     [self.commandDelegate runInBackground:^{
-        [[LISDKAPIHelper sharedInstance] postRequest:[self getRequestURL:[command.arguments objectAtIndex:0]] body:[command.arguments objectAtIndex:1] success:[self handleAPIResponse:command] error:[self getError:command]];
+        [[LISDKAPIHelper sharedInstance] postRequest:[self getRequestURL:[command.arguments objectAtIndex:0]] body:[self getRequestData:[command.arguments objectAtIndex:1]] success:[self handleAPIResponse:command] error:[self getError:command]];
     }];
 }
 
