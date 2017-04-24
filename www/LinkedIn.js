@@ -1,29 +1,40 @@
 var exec = require('cordova/exec');
 
+function callNativeMethod(name, args, success, error) {
+    args = args || [];
+    success = success || function(){};
+    error = error || function(){};
+    exec(success, error, 'LinkedIn', name, args);
+}
+
 module.exports = {
 
     login: function (scopes, promptToInstall, success, error) {
-        exec(success, error, "LinkedIn", "login", [scopes, promptToInstall]);
+        callNativeMethod('login', [scopes,  promptToInstall], success, error);
     },
 
     logout: function () {
-        exec(null, null, "LinkedIn", "logout", []);
+        callNativeMethod('logout');
     },
 
     getRequest: function (url, success, error) {
-        exec(success, error, "LinkedIn", "getRequest", [url]);
+        callNativeMethod('getRequest', [url], success, error);
     },
 
     postRequest: function (url, body, success, error) {
-        exec(success, error, "LinkedIn", "postRequest", [url, body]);
+        callNativeMethod('postRequest', [url, body], success, error);
     },
 
     openProfile: function (memberId, success, error) {
-        exec(success, error, "LinkedIn", "openProfile", [memberId]);
+        callNativeMethod('openProfile', [memberId], success, error);
     },
 
     hasActiveSession: function (success, error) {
-        exec(success, error, "LinkedIn", "hasActiveSession", []);
+        callNativeMethod('hasActiveSession', null, success, error);
+    },
+
+    getActiveSession: function (success, error) {
+        callNativeMethod('getActiveSession', null, success, error);
     }
 
 };
