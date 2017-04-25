@@ -130,12 +130,35 @@ NSString* const API_URL = @"https://api.linkedin.com/v1/";
             result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:[session isValid]];
         } else {
             //Should never happen
-            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsBool:@"Cannot verify if a preceding session is present"];
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Cannot verify if a preceding session is present"];
         }
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 
     }];
 
+}
+
+- (void)getActiveSession:(CDVInvokedUrlCommand*)command
+{
+    [self.commandDelegate runInBackground:^{
+        CDVPluginResult *result;
+        LISDKSession *session = [[LISDKSessionManager sharedInstance] session];
+        if (session != nil) {
+            if ([session isValid] == TRUE) {
+                NSDictionary* res = @{
+                    @"accessToken": [session.accessToken accessTokenValue],
+                    @"expiresOn": [NSNumber numberWithDouble:[[session.accessToken expiration] timeIntervalSince1970] * 1000]
+                };
+                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:res];
+            } else {
+                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:nil];
+            }
+        } else {
+            //Should never happen
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Cannot verify if a preceding session is present"];
+        }
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }];
 }
 
 @end
