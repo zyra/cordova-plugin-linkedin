@@ -58,9 +58,21 @@ Opens a member's profile in the LinkedIn app.
 ```js
 hasActiveSession(success, error)
 ```
-Checks if there is already an existing active session. This should be used to avoid unecessary login.
+**- - - DEPRECATED - - -**
+This method is deprecated and will be removed in the next major release. Please use `getActiveSession` instead.
+
+Checks if there is already an existing active session. This should be used to avoid unnecessary login.
 
 The success callback function will be called with one argument as a boolean, indicating whether there is an active session.
+
+### getActiveSession
+```js
+getActiveSession(success, error)
+```
+Checks if there is an existing active session. 
+
+The success callback function will be called with an object containing the access token and expiry date (if they exist).
+
 
 
 ## Example
@@ -94,9 +106,11 @@ cordova.plugins.LinkedIn.login(scopes, true, function() {
 
 
 // check for existing session
-cordova.plugin.LinkedIn.hasActiveSession(function(exists) {
-  if (exists) {
+cordova.plugin.LinkedIn.getActiveSession(function(session) {
+  if (session) {
     console.log('We have an active session');
+    console.log('Access token is: ', session.accessToken);
+    console.log('Expires on: ', session.expiresOn);
   } else {
     console.log('There is no active session, we need to call the login method');
   }
