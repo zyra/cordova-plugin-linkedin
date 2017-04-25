@@ -66,6 +66,8 @@ public class LinkedIn extends CordovaPlugin {
             postRequest(args, callbackContext);
         } else if(action.equals("hasActiveSession")) {
             hasActiveSession(callbackContext);
+        } else if(action.equals("getActiveSession")) {
+            getActiveSession(callbackContext);
         } else {
             return false;
         }
