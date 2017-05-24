@@ -117,3 +117,11 @@ cordova.plugin.LinkedIn.getActiveSession(function(session) {
 });
 
 ```
+
+<br><br>
+## Contribution
+- **Having an issue**? or looking for support? [Open an issue](https://github.com/zyra/ionic-image-loader/issues/new) and we will get you the help you need.
+- Got a **new feature or a bug fix**? Fork the repo, make your changes, and submit a pull request.
+
+## Support this project
+If you find this project useful, please star the repo to let people know that it's reliable. Also, share it with friends and colleagues that might find this useful as well. Thank you :smile:
