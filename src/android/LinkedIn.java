@@ -49,11 +49,14 @@ public class LinkedIn extends CordovaPlugin {
         context = activity.getApplicationContext();
         apiHelper = APIHelper.getInstance(context);
         liSessionManager = LISessionManager.getInstance(context);
-        cordova.setActivityResultCallback(this);
     }
 
     @Override
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+
+        // make sure we have a registered callback
+        cordova.setActivityResultCallback(this);
+
         if (action.equals("login")) {
             init(args, callbackContext);
         } else if(action.equals("logout")) {
