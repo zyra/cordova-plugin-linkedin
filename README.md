@@ -120,7 +120,7 @@ cordova.plugin.LinkedIn.getActiveSession(function(session) {
 
 <br><br>
 ## Contribution
-- **Having an issue**? or looking for support? [Open an issue](https://github.com/zyra/ionic-image-loader/issues/new) and we will get you the help you need.
+- **Having an issue**? or looking for support? [Open an issue](https://github.com/zyra/cordova-plugin-linkedin/issues/new) and we will get you the help you need.
 - Got a **new feature or a bug fix**? Fork the repo, make your changes, and submit a pull request.
 
 ## Support this project
