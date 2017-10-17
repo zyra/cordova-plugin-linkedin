@@ -105,7 +105,7 @@ cordova.plugins.LinkedIn.login(scopes, true, function() {
 
 
 // check for existing session
-cordova.plugin.LinkedIn.getActiveSession(function(session) {
+cordova.plugins.LinkedIn.getActiveSession(function(session) {
   if (session) {
     console.log('We have an active session');
     console.log('Access token is: ', session.accessToken);
