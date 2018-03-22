@@ -3,6 +3,7 @@ package com.zyramedia.cordova.linkedin;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.telecom.Call;
 import android.util.Log;
 
@@ -34,6 +35,7 @@ import java.util.List;
 public class LinkedIn extends CordovaPlugin {
 
     private final String TAG = "--  CordovaLinkedIn  --";
+    public  final String LI_APP_PACKAGE_NAME = "com.linkedin.android";
 
     private LISessionManager liSessionManager;
     private Activity activity;
@@ -49,6 +51,9 @@ public class LinkedIn extends CordovaPlugin {
         context = activity.getApplicationContext();
         apiHelper = APIHelper.getInstance(context);
         liSessionManager = LISessionManager.getInstance(context);
+        if (!linkedInAppInstalled(context)) {
+            Log.e(TAG, "Please install the linkedin mobile app on your device in order to use this plugin");
+        }
     }
 
     @Override
@@ -222,6 +227,16 @@ public class LinkedIn extends CordovaPlugin {
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, session.isValid()));
         } catch (Exception e) {
             callbackContext.error(e.getMessage());
+        }
+    }
+
+    private  boolean linkedInAppInstalled(Context context) {
+        try {
+            context.getPackageManager().getApplicationInfo(LI_APP_PACKAGE_NAME, 0);
+            return true;
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 
