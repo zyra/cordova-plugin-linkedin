@@ -1,3 +1,8 @@
+# DEPRECATION NOTICE
+This repository will not be maintained anymore due to LinkedIn announcement that terminates their mobile SDK support. Read more here: https://engineering.linkedin.com/blog/2018/12/developer-program-updates
+
+==========
+
 [![npm](https://img.shields.io/npm/l/cordova-plugin-linkedin.svg)](https://www.npmjs.com/package/cordova-plugin-linkedin/)
 [![npm](https://img.shields.io/npm/dt/cordova-plugin-linkedin.svg)](https://www.npmjs.com/package/cordova-plugin-linkedin)
 [![npm](https://img.shields.io/npm/dm/cordova-plugin-linkedin.svg)](https://www.npmjs.com/package/cordova-plugin-linkedin)
